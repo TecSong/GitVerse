@@ -1,0 +1,26 @@
+{
+  "name": "gitverse",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gitScript.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TecSong/GitVerse.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TecSong/GitVerse/issues"
+  },
+  "homepage": "https://github.com/TecSong/GitVerse#readme",
+  "dependencies": {
+    "ethers": "^5.7.2",
+    "nft.storage": "^7.0.0",
+    "zx": "^7.1.1"
+  }
+}
