@@ -3,12 +3,18 @@
 import {$} from "zx";
 import { NFTStorage, File, Blob } from 'nft.storage'
 import { ethers } from 'ethers';
+import process from 'process';
+import {abi} from "./compile";
 
 let infuraProvider = new ethers.providers.InfuraProvider('goerli');
 const blocknum = await infuraProvider.getBlockNumber()
 
 console.log(blocknum)
 const tag_name = (await $`git tag|tail -1|xargs echo -n`).stdout; //获取到最后一个标签名,没有标签名抛出错误
+if (!tag_name){
+  console.log("Your project have no tags yet.")
+  process.exit();
+}
 // const files = (await $`git ls-files -- . ':!:node_modules/*'`).stdout; //获取当前标签下所有文件的列表
 const repo_path = (await $`git rev-parse --show-toplevel`).stdout;
 const repo_name = await $`basename ${repo_path}|xargs echo -n`
@@ -40,15 +46,40 @@ async function checkExist(file) {
 
 
 const storeBlob = async(file) => {
-  const cid = await client.storeBlob(file)
-  return `ipfs://${cid}`
+  let res = await checkExist(file)
+  if (!res){
+      const cid = await client.storeBlob(file)
+      return `ipfs://${cid}`
+  }
 }
 
-void async function () {
-  let res = await checkExist(someData)
-  console.log(res)
-  if (!res){
-    let strore_res = await storeBlob(someData)
-    console.log(strore_res)
-  }
-}()
+const metadataCID =  storeBlob(someData);
+if (!metadataCID){
+  console.log("store file error!")
+  process.exit();
+}
+
+/* 合约交互 */
+
+let infuraProvider = new ethers.providers.InfuraProvider('mumbai');
+// let infuraProvider = new ethers.providers.InfuraProvider('goerli');
+
+const contractAddress = '0xc61Ac59345150b0728ab3266766528C6e4aCbB75';
+const account_from = {
+  privateKey: '',
+};
+let wallet = new ethers.Wallet(account_from.privateKey, infuraProvider);
+const gvNFT = new ethers.Contract(contractAddress, abi, wallet);
+
+const basicPrice = 1000000;
+const inviteCommission = 1;
+const params = {}
+await contractWriter.addBook(_basicPrice, _inviteCommission, metadataCID, { value })
+const addpkg = async () => {
+  const createReceipt = await gvNFT.addPkg(basicPrice, inviteCommission, metadataCID, params);
+  await createReceipt.wait();
+
+  console.log(`Tx successful with hash: ${createReceipt.hash}`);
+};
+
+addpkg();
