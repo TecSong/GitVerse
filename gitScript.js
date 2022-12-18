@@ -84,8 +84,8 @@ const metadata = {
   properties: _properties,
 }
 
-// const metadataCID = await storeJson(metadata)
-const metadataCID = 'ipfs://bafkreiaf6mean377xulltz3oflghuzbqzv7np33ja4akzydfqujpveo6xq'
+const metadataCID = await storeJson(metadata)
+// const metadataCID = 'ipfs://bafkreiaf6mean377xulltz3oflghuzbqzv7np33ja4akzydfqujpveo6xq'
 console.log(`====> metadataCID :`, metadataCID)
 /* 合约交互 */
 
@@ -121,3 +121,4 @@ const rc = await tx.wait()
 // const tokenId = rz.tokenId.toString()
 console.log(`====> tokenId : https://mumbai.polygonscan.com/tx/${tx.hash}`)
 
+await $`rm ${output_file_name}`
