@@ -5,6 +5,7 @@ specifiers:
   ethers: ^5.7.2
   nft.storage: ^7.0.0
   nodemon: ^2.0.20
+  uint8arrays: ^4.0.2
   zx: ^7.1.1
 
 dependencies:
@@ -15,6 +16,7 @@ dependencies:
 devDependencies:
   dotenv: 16.0.3
   nodemon: 2.0.20
+  uint8arrays: 4.0.2
 
 packages:
 
@@ -1623,6 +1625,11 @@ packages:
       - supports-color
     dev: false
 
+  /multiformats/10.0.3:
+    resolution: {integrity: sha512-K2yGSmstS/oEmYiEIieHb53jJCaqp4ERPDQAYrm5sV3UUrVDZeshJQCK6GHAKyIGufU1vAcbS0PdAAZmC7Tzcw==}
+    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
+    dev: true
+
   /multiformats/9.9.0:
     resolution: {integrity: sha512-HoMUjhH9T8DDBNT+6xzkrd9ga/XiBI4xLr58LJACwK6G3HTOPeMz4nB4KJs33L2BelrIJa7P0VuNaVF3hMYfjg==}
     dev: false
@@ -2148,6 +2155,13 @@ packages:
     dependencies:
       multiformats: 9.9.0
     dev: false
+
+  /uint8arrays/4.0.2:
+    resolution: {integrity: sha512-8CWXXZdOvVrIL4SeY/Gnp+idxxiGK4XFkP4FY26Sx/fpTz/b6vv4BVWELMDzQweSyyhdcuAcU14H6izzB6k1Cw==}
+    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
+    dependencies:
+      multiformats: 10.0.3
+    dev: true
 
   /undefsafe/2.0.5:
     resolution: {integrity: sha512-WxONCrssBM8TSPRqN5EmsjVrsv4A8X12J4ArBiiayv3DyyG3ZlIg6yysuuSYdZsVz3TKcTg2fd//Ujd4CHV1iA==}
