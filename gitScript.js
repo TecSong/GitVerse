@@ -4,12 +4,9 @@ import {$} from "zx";
 import { NFTStorage, File, Blob } from 'nft.storage'
 import { ethers } from 'ethers';
 import process from 'process';
-import {abi} from "./compile";
+import dotenv from 'dotenv'
+dotenv.config()
 
-let infuraProvider = new ethers.providers.InfuraProvider('goerli');
-const blocknum = await infuraProvider.getBlockNumber()
-
-console.log(blocknum)
 const tag_name = (await $`git tag|tail -1|xargs echo -n`).stdout; //获取到最后一个标签名,没有标签名抛出错误
 if (!tag_name){
   console.log("Your project have no tags yet.")
@@ -61,9 +58,27 @@ if (!metadataCID){
 
 /* 合约交互 */
 
-let infuraProvider = new ethers.providers.InfuraProvider('mumbai');
-// let infuraProvider = new ethers.providers.InfuraProvider('goerli');
+const chainMap = {
+  '0x13881': {
+    chainId: '0x13881',
+    chainName: 'Polygon Testnet Mumbai',
+    blockExplorerUrls: [
+      'https://mumbai.polygonscan.com/',
+    ],
+    nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+    rpcUrls: [
+      'https://matic-mumbai.chainstacklabs.com',
+      'https://rpc-mumbai.maticvigil.com',
+      'https://matic-testnet-archive-rpc.bwarelabs.com',
+    ],
+  },
+}
 
+const provider = new ethers.providers.JsonRpcProvider('https://matic-mumbai.chainstacklabs.com', 1)
+const privKey = process.env.PRIVATE_KEY
+const privKeyBuffer = u8a.fromString(privKey, "base16");
+const wallet = new ethers.Wallet(privKeyBuffer);
+    
 const contractAddress = '0xc61Ac59345150b0728ab3266766528C6e4aCbB75';
 const account_from = {
   privateKey: '',
